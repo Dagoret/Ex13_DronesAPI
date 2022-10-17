@@ -11,7 +11,7 @@ public class DroneController : ControllerBase
 {
     //Serv
     [HttpPost]
-    public IActionResult PostDrone([FromBody] Drone drone) => Created("", Service.AddDrone(drone));
+    public IActionResult PostDrone([FromBody] DroneSimplified drone) => Created("", Service.AddDrone(drone));
 
     [HttpGet]
     public IEnumerable<Drone> GetDrones()

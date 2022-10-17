@@ -1,0 +1,1 @@
+[{"DroneId":0,"PropulsionType":1,"PilotType":1}]

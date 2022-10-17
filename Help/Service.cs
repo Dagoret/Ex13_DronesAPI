@@ -51,9 +51,16 @@ namespace Ex13_DronesAPI.Help
         }
 
 
-        public static Drone AddDrone(Drone drone)
+        public static Drone AddDrone(DroneSimplified droneSimplified)
         {
             var fileContent = FileHelper.ReadAndDesirializeFile<Drone>(DronePath);
+            var drone = new Drone()
+            {
+                DroneId = 0,
+                PropulsionType = droneSimplified.PropulsionType,
+                PilotType = droneSimplified.PilotType
+            };
+
             if(fileContent == null)
             {
                 List<Drone> drones = new();
@@ -61,7 +68,10 @@ namespace Ex13_DronesAPI.Help
                 FileHelper.SerializeAndWrite(drones, DronePath);
                 return drone;
             }
+
             var droneList = fileContent.ToList();
+            var maxDroneId = droneList.OrderBy(x => x.DroneId).First().DroneId;
+            drone.DroneId = ++maxDroneId;
             droneList.Add(drone);
             FileHelper.SerializeAndWrite(droneList, DronePath);
             return drone;
@@ -74,29 +84,15 @@ namespace Ex13_DronesAPI.Help
             return fileContent.ToList<Drone>();
         }
 
-        private static bool isFlightAvailable(Flight flight)
-        {
-            if (flight.DroneId == -1) return false;
-            return true;
-        }
-
         public static bool isDronePuttable(Flight flight, Drone drone)
         {
-            bool puttable = false;
-
-            if(isFlightAvailable(flight)) puttable = true;
-
             //ritorna vero se c'è almeno un volo non compatibile con quello a cui vogliamo associare il drone
             var isFlightDoable = GetFlights()
                 .Where(f => f.DroneId == drone.DroneId &&
-                ((flight.DepartureDate < f.DepartureDate && 
-                    flight.ArrivalDate < f.DepartureDate) ||
-                flight.DepartureDate > f.ArrivalDate)).Any();
+                (flight.ArrivalDate < f.DepartureDate) || flight.DepartureDate > f.ArrivalDate)
+                .Any();
 
-            if (isFlightDoable) puttable = false;
-            else puttable = true;
-
-            return puttable;
+            return !isFlightDoable;
 
         }
 
