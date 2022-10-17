@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Ex13_DronesAPI.Help;
+using Ex13_DronesAPI.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace Ex13_DronesAPI.Controllers;
 
@@ -6,8 +9,14 @@ namespace Ex13_DronesAPI.Controllers;
 [Route("[controller]")]
 public class DroneController : ControllerBase
 {
-    Serv
+    [HttpPost]
+    public IActionResult PostDrone([FromBody] Drone drone) =>
+        CreatedAtAction($"drones/{drone.DroneId}", Service.AddDrone(drone));
 
-
+    [HttpPut("{flightId}/drone/{droneId}")]
+    public IActionResult PutDroneIntoFlight(int flightId, int droneId) 
+    {
+        
+    }
 
 }
