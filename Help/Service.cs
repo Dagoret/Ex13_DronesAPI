@@ -20,6 +20,9 @@ namespace Ex13_DronesAPI.Help
             var flightList = FileHelper.ReadAndDesirializeFile<Flight>(FlightPath).ToList();
 
             flightList.Add(flight);
+
+            FileHelper.SerializeAndWrite<Flight>(flightList, FlightPath);
+
             return true;
             
         }
