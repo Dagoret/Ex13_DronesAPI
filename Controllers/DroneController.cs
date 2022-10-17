@@ -6,7 +6,7 @@ namespace Ex13_DronesAPI.Controllers;
 [Route("[controller]")]
 public class DroneController : ControllerBase
 {
-    Serv
+    //Serv
 
 
 

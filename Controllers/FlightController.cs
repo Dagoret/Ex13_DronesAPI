@@ -21,7 +21,7 @@ namespace Ex13_DronesAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetFlightById(int id)
         {
-            return Ok(Service.GetFlights().Where(flight => flight.FlightId == id));
+            return Ok(Service.GetFlightById(id));
         }
 
         // POST api/<FlightController>
@@ -29,18 +29,6 @@ namespace Ex13_DronesAPI.Controllers
         public IActionResult Post([FromBody] Flight flight)
         {
             return Ok(Service.PostFlight(flight));
-        }
-
-        // PUT api/<FlightController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<FlightController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
