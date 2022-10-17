@@ -13,14 +13,36 @@ namespace Ex13_DronesAPI.Help
         public static List<Flight> GetFlights()
         {
             var flightList = FileHelper.ReadAndDesirializeFile<Flight>(FlightPath);
+
+            if (flightList is null)
+            {
+                var newFlightList = new List<Flight>();
+                return newFlightList;
+            }
+
             return flightList.ToList();
+        }
+
+        public static Flight GetFlightById(int id)
+        {
+
+            var flight = GetFlights().FirstOrDefault<Flight>(flight => flight.FlightId == id);
+            return flight;
         }
 
         public static bool PostFlight(Flight flight)
         {
-            var flightList = FileHelper.ReadAndDesirializeFile<Flight>(FlightPath).ToList();
+            var flightList = FileHelper.ReadAndDesirializeFile<Flight>(FlightPath);
 
-            flightList.Add(flight);
+            if(flightList is null)
+            {
+                var newFlightList = new List<Flight>();
+                newFlightList.Add(flight);
+                FileHelper.SerializeAndWrite<Flight>(newFlightList, FlightPath);
+                return true;
+            }
+
+            flightList.ToList().Add(flight);
 
             FileHelper.SerializeAndWrite<Flight>(flightList, FlightPath);
 

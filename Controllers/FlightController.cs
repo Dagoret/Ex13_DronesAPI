@@ -21,7 +21,7 @@ namespace Ex13_DronesAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetFlightById(int id)
         {
-            return Ok(Service.GetFlights().Where(flight => flight.FlightId == id));
+            return Ok(Service.GetFlightById(id));
         }
 
         // POST api/<FlightController>
