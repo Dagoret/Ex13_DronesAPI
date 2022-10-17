@@ -10,17 +10,9 @@ namespace Ex13_DronesAPI.Help
         public static string FlightPath { get; private set; } = $"{currentDirectory}..\\..\\..\\Files\\Flights.txt";
 
         
-        public static List<Flight> GetFlights()
+        public static IEnumerable<Flight> GetFlights()
         {
-            var flightList = FileHelper.ReadAndDesirializeFile<Flight>(FlightPath);
-
-            if (flightList is null)
-            {
-                var newFlightList = new List<Flight>();
-                return newFlightList;
-            }
-
-            return flightList.ToList();
+            return FileHelper.ReadAndDesirializeFile<Flight>(FlightPath);
         }
 
         public static Flight GetFlightById(int id)
@@ -41,13 +33,23 @@ namespace Ex13_DronesAPI.Help
                 return true;
             }
 
-            flightList.ToList().Add(flight);
+            var updatedFlightList = flightList.ToList();
+            updatedFlightList.Add(flight);
 
-            FileHelper.SerializeAndWrite<Flight>(flightList, FlightPath);
+            FileHelper.SerializeAndWrite<Flight>(updatedFlightList.OrderBy(x => x.FlightId), FlightPath);
 
             return true;
             
         }
+
+        public static void UpdateFlight(Flight flight)
+        {
+            var updatedFlights = GetFlights().Where(fl => fl.FlightId != flight.FlightId).ToList();
+            updatedFlights.Add(flight);
+
+            FileHelper.SerializeAndWrite(updatedFlights, FlightPath);
+        }
+
 
         public static Drone AddDrone(Drone drone)
         {

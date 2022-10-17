@@ -2,9 +2,9 @@
 {
     public enum PropulsionTypes
     {
-        Reaction = 1,
-        FixedWing = 2,
-        Helix = 3
+        Reaction = 0,
+        FixedWing = 1,
+        Helix = 2
     }
     public enum PilotTypes
     {
@@ -14,7 +14,7 @@
     public class Drone
     {
         public int DroneId { get; set; }
-        public TimeSpan FlightTime { get; set; }
+        //public TimeSpan FlightTime { get; set; }
         public PropulsionTypes PropulsionType { get; set; }
         public PilotTypes PilotType { get; set; }
     }

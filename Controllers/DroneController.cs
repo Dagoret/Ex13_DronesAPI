@@ -11,9 +11,13 @@ public class DroneController : ControllerBase
 {
     //Serv
     [HttpPost]
-    public IActionResult PostDrone([FromBody] Drone drone) =>
-        CreatedAtAction($"drones/{drone.DroneId}", Service.AddDrone(drone));
+    public IActionResult PostDrone([FromBody] Drone drone) => Created("", Service.AddDrone(drone));
 
+    [HttpGet]
+    public IEnumerable<Drone> GetDrones()
+    {
+        return Service.GetDrones();
+    }
 
 
 }

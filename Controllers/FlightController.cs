@@ -14,14 +14,18 @@ namespace Ex13_DronesAPI.Controllers
         [HttpGet]
         public IActionResult GetAllFlights()
         {
-            return Ok(Service.GetFlights());
+            var flights = Service.GetFlights();
+            if (flights == null) NoContent();
+            return Ok(flights);
         }
 
         // GET api/<FlightController>/5
         [HttpGet("{id}")]
         public IActionResult GetFlightById(int id)
         {
-            return Ok(Service.GetFlightById(id));
+            var flight = Service.GetFlightById(id);
+            if (flight == null) return NotFound();
+            return Ok(flight);
         }
 
         // POST api/<FlightController>
@@ -47,12 +51,16 @@ namespace Ex13_DronesAPI.Controllers
         public IActionResult PutDroneIntoFlight(int flightId, int droneId)
         {
             var flight = Service.GetFlights().Where(fl => fl.FlightId == flightId).FirstOrDefault();
-            var drone = Service.GetAllDrones().Where(dr => dr.DroneId == droneId).FirstOrDefault();
+            var drone = Service.GetDrones().Where(dr => dr.DroneId == droneId).FirstOrDefault();
             if (drone == null || flight == null) return NotFound();
 
-
-            flight.DroneId = droneId;
-            return Ok(drone);
+            if(Service.isDronePuttable(flight, drone))
+            {
+                flight.DroneId = droneId;
+                Service.UpdateFlight(flight);
+                return Ok(drone);
+            }
+            return BadRequest("The drone cannot be associated to the flight");
         }
     }
 }

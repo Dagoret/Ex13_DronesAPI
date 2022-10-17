@@ -1,1 +1,0 @@
-[{"FlightId":0,"DepartureDate":"2022-10-17T13:26:15.583Z","ArrivalDate":"2022-10-17T13:26:15.583Z","DroneId":0}]
