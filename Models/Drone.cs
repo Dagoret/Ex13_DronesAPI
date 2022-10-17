@@ -15,7 +15,7 @@
     {
         public int DroneId { get; set; }
         public TimeSpan FlightTime { get; set; }
-        public int PropulsionType { get; set; }
-        public int PilotType { get; set; }
+        public PropulsionTypes PropulsionType { get; set; }
+        public PilotTypes PilotType { get; set; }
     }
 }
