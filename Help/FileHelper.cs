@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Ex13_DronesAPI.Models
+namespace Ex13_DronesAPI.Help
 {
     public static class FileHelper
     {
@@ -13,7 +13,7 @@ namespace Ex13_DronesAPI.Models
         public static IEnumerable<T> ReadAndDesirializeFile<T>(string path)
         {
             var fileContent = File.ReadAllText(path);
-            if(fileContent == string.Empty)
+            if (fileContent == string.Empty)
             {
                 return null;
             }
