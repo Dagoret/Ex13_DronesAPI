@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ex13_DronesAPI.Help;
+using Ex13_DronesAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,8 +26,9 @@ namespace Ex13_DronesAPI.Controllers
 
         // POST api/<FlightController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Flight flight)
         {
+            return Ok(Service.PostFlight(flight));
         }
 
         // PUT api/<FlightController>/5

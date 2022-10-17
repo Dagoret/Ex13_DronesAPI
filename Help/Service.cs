@@ -15,6 +15,13 @@ namespace Ex13_DronesAPI.Help
             return flightList.ToList();
         }
 
-        public static bool PostFlight 
+        public static bool PostFlight(Flight flight)
+        {
+            var flightList = FileHelper.ReadAndDesirializeFile<Flight>(FlightPath).ToList();
+
+            flightList.Add(flight);
+            return true;
+            
+        }
     }
 }
