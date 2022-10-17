@@ -11,16 +11,16 @@ namespace Ex13_DronesAPI.Controllers
     {
         // GET: api/<FlightController>
         [HttpGet]
-        public IEnumerable<string> GetAllFlights()
+        public IActionResult GetAllFlights()
         {
-            return Ok();
+            return Ok(Service.GetFlights());
         }
 
         // GET api/<FlightController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetFlightById(int id)
         {
-            return "value";
+            return Ok(Service.GetFlights().Where(flight => flight.FlightId == id));
         }
 
         // POST api/<FlightController>
