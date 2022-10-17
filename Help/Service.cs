@@ -25,7 +25,6 @@ namespace Ex13_DronesAPI.Help
 
         public static Flight GetFlightById(int id)
         {
-
             var flight = GetFlights().FirstOrDefault<Flight>(flight => flight.FlightId == id);
             return flight;
         }
@@ -73,11 +72,29 @@ namespace Ex13_DronesAPI.Help
             return fileContent.ToList<Drone>();
         }
 
-        public bool isDronePuttable(Flight flight, Drone drone)
+        private static bool isFlightAvailable(Flight flight)
         {
             if (flight.DroneId == -1) return false;
-            GetFlights().Where(f => f.DroneId == drone.DroneId);
+            return true;
+        }
 
+        public static bool isDronePuttable(Flight flight, Drone drone)
+        {
+            bool puttable = false;
+
+            if(isFlightAvailable(flight)) puttable = true;
+
+            //ritorna vero se c'è almeno un volo non compatibile con quello a cui vogliamo associare il drone
+            var isFlightDoable = GetFlights()
+                .Where(f => f.DroneId == drone.DroneId &&
+                ((flight.DepartureDate < f.DepartureDate && 
+                    flight.ArrivalDate < f.DepartureDate) ||
+                flight.DepartureDate > f.ArrivalDate)).Any();
+
+            if (isFlightDoable) puttable = false;
+            else puttable = true;
+
+            return puttable;
 
         }
 
