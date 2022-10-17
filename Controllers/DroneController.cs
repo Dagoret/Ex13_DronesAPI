@@ -13,10 +13,6 @@ public class DroneController : ControllerBase
     public IActionResult PostDrone([FromBody] Drone drone) =>
         CreatedAtAction($"drones/{drone.DroneId}", Service.AddDrone(drone));
 
-    [HttpPut("{flightId}/drone/{droneId}")]
-    public IActionResult PutDroneIntoFlight(int flightId, int droneId) 
-    {
-        
-    }
+
 
 }

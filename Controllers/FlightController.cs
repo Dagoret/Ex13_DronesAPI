@@ -42,5 +42,17 @@ namespace Ex13_DronesAPI.Controllers
         public void Delete(int id)
         {
         }
+
+        [HttpPut("{flightId}/drone/{droneId}")]
+        public IActionResult PutDroneIntoFlight(int flightId, int droneId)
+        {
+            var flight = Service.GetFlights().Where(fl => fl.FlightId == flightId).FirstOrDefault();
+            var drone = Service.GetAllDrones().Where(dr => dr.DroneId == droneId).FirstOrDefault();
+            if (drone == null || flight == null) return NotFound();
+
+
+            flight.DroneId = droneId;
+            return Ok(drone);
+        }
     }
 }

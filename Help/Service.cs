@@ -1,4 +1,5 @@
 ﻿using Ex13_DronesAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ex13_DronesAPI.Help
 {
@@ -42,5 +43,23 @@ namespace Ex13_DronesAPI.Help
             FileHelper.SerializeAndWrite(droneList, DronePath);
             return drone;
         }
+
+        public static List<Drone> GetDrones()
+        {
+            var fileContent = FileHelper.ReadAndDesirializeFile<Drone>(DronePath);
+            if (fileContent == null) return null;
+            return fileContent.ToList<Drone>();
+        }
+
+        public bool isDronePuttable(Flight flight, Drone drone)
+        {
+            if (flight.DroneId == -1) return false;
+            GetFlights().Where(f => f.DroneId == drone.DroneId);
+
+
+        }
+
+
+
     }
 }
