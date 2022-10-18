@@ -84,6 +84,13 @@ namespace Ex13_DronesAPI.Help
             return fileContent.ToList<Drone>();
         }
 
+        public static Drone GetDroneById(int id)
+        {
+            var droneFound = GetDrones().Where(d => d.DroneId == id).FirstOrDefault();
+            if (droneFound != null) return droneFound;
+            return null;
+        }
+
         public static bool isDronePuttable(Flight flight, Drone drone)
         {
             //ritorna vero se c'è almeno un volo non compatibile con quello a cui vogliamo associare il drone
